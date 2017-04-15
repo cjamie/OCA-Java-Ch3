@@ -1,5 +1,6 @@
 package ch3;
 
+import java.util.Arrays;
 /**
  *
  * @author huanj
@@ -184,23 +185,59 @@ public class Chapter3 {
             System.out.print(stuff+" ");
         }
         
-        //implicit 
+        //implicit cast 
         Object[] objects = lantern2;
-        //explicit
+        //explicit cast
         String[] lantern2_2 = (String[])objects;
+        System.out.println("\nlantern2_2[0]="+ lantern2_2[0]);
     }   
+    
     /*
     3.1* Arrays class methods: 
     equals() has no overridden implementation so it tests reference equality
-    -requires an import java.util.Arrays or java.util.*;
+    
+   -Arrays class requires an import from java.util.Arrays or java.util.*;
+    ---sort(arrayName) will sort the arrayName alphabetically/in ascii value 
+      CAUTION: characters and int sort differently
+    ---binarySearch(arrayName, element)- in a sorted array, will return index of element
+        -if sorted but entry does not exist, negate at intended index and subtract 1
+   
+   -note: if you try to access an invalid array index, an ArrayIndexOutOfBoundsException will be thrown
     */   
+   
     static void H(){
-        int[] a= {1,2};
-        int b[]= {1,2};
-        System.out.println("\n\nMethod H:");
-        System.out.println(a.equals(b));
+        int[] a= {1,2,100,4};
+        String b[]= {"1","2", "100"};
         
-        System.out.println(b.);
+        System.out.println("\n\nMethod H:");        
+        System.out.println("[]a, b before sort:");
+        System.out.print("a:");
+        for(int stuff:a){
+            System.out.print(stuff +" ");
+        }
+        System.out.print("\nb:");
+        for(String stuff:b){
+            System.out.print(stuff +" ");
+        }
+        
+        Arrays.sort(a); 
+        Arrays.sort(b);
+        System.out.println("\n[]a, b after sort:");
+        System.out.print("a:");
+        for(int stuff:a){
+            System.out.print(stuff +" ");
+        }
+        System.out.print("\nb:");
+        for(String stuff:b){
+            System.out.print(stuff +" ");
+        }
+        
+        System.out.println("\nbinarySearch(a,4):"+Arrays.binarySearch(a, 4));//returns 2 
+        System.out.println("binarySearch(a,5):"+Arrays.binarySearch(a, 5));//entry should be on entry 3-> negate gives -3 then subtract 1 for -4
+        
+        System.out.println("\n"+a.equals(b));
+        
+//      System.out.println(b.);
         System.out.println();
     } 
 
