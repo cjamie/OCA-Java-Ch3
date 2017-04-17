@@ -1,6 +1,9 @@
 package ch3;
 
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+//import java.util.*; //alternative to the two imports above
 /**
  *
  * @author huanj
@@ -16,9 +19,13 @@ import java.util.Arrays;
  * (2)StringBuilder is a mutable class that may be used over strings to save space
  *      2.1* StringBuilder equality
  * (3)Arrays
- *      3.1* Array methods 
- * (4)
- * (5)ArrayList object
+ *      3.1* Arrays methods 
+ *      3.2* Multidimensional Arrays
+ * (4)ArrayList object
+ *      4.1*ArrayList methods
+ *      4.2*ArrayList and Wrapper Classes 
+ *      4.3*Autoboxing 
+ * 
  * --its use with generics
  * ()autoboxing
  * 
@@ -33,14 +40,20 @@ import java.util.Arrays;
 
 public class Chapter3 {
    public static void main(String[] args){
-       A();
-       B();
-       C();
-       D();  
-       E();
-       F();
-       G();
-       H();
+//       A();
+//       B();
+//       C();
+//       D();  
+//       E();
+//       F();
+//       G();
+//       H();
+//       I();
+//       J();
+       K();
+       L();
+       M();
+       N();
    }
    /*
    1.1* concatenation rules:
@@ -51,7 +64,7 @@ public class Chapter3 {
    static void A(){
        System.out.println("Method A:");
        System.out.println(1+2); //number+number
-       System.out.println(2+'b'+"c"); //number+char->number+string=100c
+       System.out.println(2+'b'+"c"); //number+char+string->number+string->string=100c
        System.out.println("a"+2); // String+anything
    }
    /*
@@ -65,11 +78,13 @@ public class Chapter3 {
        System.out.println("a does not change:");
    }
    /*
-   1.3* String Pool
+   1.3* String Pool 
    Strings from same part of string pool are re-used if both created without 
-   new keyword and have the same content value
+   explicitly using new keyword and have the same content value
    
-   == equality operator compares physical address
+   implication: "new" strings have different references from strings inside
+   
+   == equality operator compares reference equality
    */
    static void C(){
        String a="bcd";
@@ -84,7 +99,7 @@ public class Chapter3 {
    
    /*
    1.4*
-   Popular String methods
+   required String methods in OCA exam
    
    length, charAt, indexOf, substring, toLowerCase, toUpperCase, equals,
    equalsIgnoreCase, startsWith, endsWith, contains, replace, trim 
@@ -174,6 +189,8 @@ public class Chapter3 {
         System.out.println("2 \t" + lantern2.toString()); //
         System.out.println("3 \t" + lantern3.toString());
        
+        System.out.println("lantern0.length:"+lantern0.length);
+        
         for (String stuff:lantern2){
             System.out.print(stuff+" ");
         }
@@ -194,20 +211,21 @@ public class Chapter3 {
     
     /*
     3.1* Arrays class methods: 
-    equals() has no overridden implementation so it tests reference equality
+    -equals() has no overridden implementation so it tests reference equality
     
-   -Arrays class requires an import from java.util.Arrays or java.util.*;
+    -Arrays class requires an import from java.util.Arrays or java.util.*;
     ---sort(arrayName) will sort the arrayName alphabetically/in ascii value 
       CAUTION: characters and int sort differently
     ---binarySearch(arrayName, element)- in a sorted array, will return index of element
         -if sorted but entry does not exist, negate at intended index and subtract 1
-   
-   -note: if you try to access an invalid array index, an ArrayIndexOutOfBoundsException will be thrown
+        -NOTE: if array is NOT sorted, output is unpredictable
+    -note: if you try to access an invalid array index, an ArrayIndexOutOfBoundsException will be thrown
     */   
    
     static void H(){
         int[] a= {1,2,100,4};
         String b[]= {"1","2", "100"};
+        int[] c= {1,2,4,100};
         
         System.out.println("\n\nMethod H:");        
         System.out.println("[]a, b before sort:");
@@ -222,6 +240,7 @@ public class Chapter3 {
         
         Arrays.sort(a); 
         Arrays.sort(b);
+        
         System.out.println("\n[]a, b after sort:");
         System.out.print("a:");
         for(int stuff:a){
@@ -235,14 +254,168 @@ public class Chapter3 {
         System.out.println("\nbinarySearch(a,4):"+Arrays.binarySearch(a, 4));//returns 2 
         System.out.println("binarySearch(a,5):"+Arrays.binarySearch(a, 5));//entry should be on entry 3-> negate gives -3 then subtract 1 for -4
         
-        System.out.println("\n"+a.equals(b));
+        
+        System.out.println("a.equals(c):"+a.equals(c));
         
 //      System.out.println(b.);
         System.out.println();
     } 
 
-    
+    /*
+    (3.2*
+    Multidimensional Arrays
+    -valid declarations
+    -iterating through an array with an enhanced for loop
+    */
     static void I(){
+        //2d declarations
+        int[][] a0;
+        int a1[][];
+        int[] []a2;
+        int[] a3[];
+        //2d and 3d on same line
+        int[] a4[], a5[][];
+
+        //2d declarations with with a specified size
+        String[][] a6={{"January", "February"},{"March"},{"April", "May"}};
+        String[][] a7=new String[2][]; //[][int] will not work
+        String[][] a8=new String[3][2];
         
+        //iterating through with enhanced for loop
+        System.out.println("Method I:");
+        for(String[] inner:a6){
+            for(String content:inner)
+                System.out.print(content+" ");
+        }
+    }
+    /*
+    (4)ArrayList is a mutable object
+    -requires an import from java.util.ArrayList
+    ---implements the List and Iterable interface
+    -valid declaration (3 pre-java5 and 2 with generics)
+    */
+    static void J(){
+        //pre-java5 ArrayList
+        ArrayList a = new ArrayList();
+        ArrayList b = new ArrayList(3);
+        ArrayList c = new ArrayList(a);
+        //ArrayList with generics
+        ArrayList<String> d = new ArrayList<String>();//specifying string with constructor is redundant info
+        ArrayList<String> e = new ArrayList<>();//<> refered to as diamond operator
+        
+        List<String> f = new ArrayList<>(); //you can use an instance of the ArrayList class as an instance of List
+    }   
+    /*
+    4.1* ArrayList Methods required for OCA
+    -add(), remove, set, isEmpty, size, clear, contains, 
+    -ArrayList has a custom implementation which returns true on content equality 
+    -DOES NOT support method chaining, like Strings, or StringBuilder objects
+    */
+    static void K(){
+        ArrayList a = new ArrayList();
+        ArrayList b = new ArrayList();
+        b.add("an entry");
+        b.add(4);
+        
+        System.out.println("\nMethod K:");
+        //.add() takes an (element) or (int index,element) parameter
+        a.add("a string"); //returns boolean true
+        a.add(0,Boolean.TRUE); //void return type NOTE: we are adding a Boolean wrapper object
+        System.out.println(a);
+        
+        
+        //.remove() takes an (element) or (int index) parameter)
+        a.remove(1); //returns a boolean telling us it was removed (Boolean.TRUE) or not (Boolean.FALSE)
+        a.remove(Boolean.TRUE);
+        System.out.println(a);
+        
+        //.set() takes a (int index, element) parameter
+        a.add("new String that doesn't matter");
+        a.set(0,"new String that replaces previous"); //returns element
+        System.out.println(a);
+        
+        //.clear() discards all of the elements of the ArrayList object 
+        a.clear(); //void return type: 
+        System.out.println("after a clear():"+ a);
+        
+        //.isEmpty() and .size() returns boolean and int respectively
+        System.out.println("before add(): isEmpty() returns:"+a.isEmpty()+" and a.size() returns:"+a.size());
+        a.add("an entry");
+        System.out.println("after add(): isEmpty() is: "+a.isEmpty()+" and a.size() returns:"+a.size());
+                
+        //.contains() takes a (element) parameter and returns a boolean
+        a.add(4);
+        System.out.println("Does a.contain(4)? "+a.contains(4)); 
+        
+        //.equals returns true on CONTENT equality, not reference
+        System.out.println("testing for content equality with equals: "+a.equals(b));
+    }
+    /*
+    4.2* ArrayList and Wrapper Classes: 
+        
+    Wrapper classes are an object type with a corresponding primitive: 
+    Arrays do not interpret literal inputs as its primitive type. Instead, it interprets it as its Wrapper class
+    
+    Boolean, Byte, Short, Integer, Long, Float, Double, Character are the wrapper classes of...
+    boolean, byte, short, int, long, float, double, and char respectively, 
+    
+    Emphasis:
+    String to primitive conversion can be done via wrapper classes using a method with parse<primitiveType> keyword 
+    String to wrapper class assignment could be done via the wrapper classes' valueOf() method 
+    
+    4.3* Autoboxing 
+    
+    */
+    static void L(){
+        
+        List<Double> b = new ArrayList<>();
+        List<Integer> c= new ArrayList<>();      
+        
+        //String to primtive (via WrapperClass)
+        int a0 = Integer.parseInt("534"); 
+        System.out.println("\nMethod L: \nint a0 = "+a0);
+        
+        //String to Wrapper Object
+        Integer a1= Integer.valueOf("533");
+        System.out.println("Value of Integer object a1:"+a1);
+        
+        //autoboxing: Java compiler will implicitly cast a primitive into its wrapper class as ArrayList entry 
+        
+        b.add(22.4);//the 22.4 double literal it autoboxed into a Double Wrapper Object 
+        System.out.println("Confirming b[0]'s object type: "+b.get(0).getClass().getTypeName());
+        
+        b.add(new Double(60));
+        b.add(Double.valueOf("43.22"));
+        
+        //CAUTION: be careful with integers
+        System.out.println("ArrayList b:"+b);
+        c.add(1);
+        c.add(2);
+        c.remove(1); //removes entry #1, NOT the Integer entry with a value of 1
+        //c.remove(Integer.valueOf("1")); //if you really want to remove Integer entry by value
+        
+        System.out.println("ArrayList c:"+c);
+    }
+    /*
+    4.3* ArrayList <-> Array Conversion 
+    
+    ArrayList has a toArray() method that returns an Array
+    CAUTION: 
+        
+    */
+    
+    static void M(){
+        System.out.println("\nMethod M: ");
+        //ArrayList to Array: 
+        ArrayList<String> a = new ArrayList<>();
+        a.add("String1");
+        
+        Object[] objectArr=a.toArray();
+        System.out.println(objectArr);
+        
+    }
+    
+    static void N(){
+    
     }
 }
