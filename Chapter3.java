@@ -371,7 +371,7 @@ public class Chapter3 {
         List<Double> b = new ArrayList<>();
         List<Integer> c= new ArrayList<>();      
         
-        //String to primtive (via WrapperClass)
+        //String to primtive (via a 'helper' Wrapper Class )
         int a0 = Integer.parseInt("534"); 
         System.out.println("\nMethod L: \nint a0 = "+a0);
         
@@ -400,22 +400,56 @@ public class Chapter3 {
     4.3* ArrayList <-> Array Conversion 
     
     ArrayList has a toArray() method that returns an Array
-    CAUTION: 
-        
+    
+    ArrayList/List to Array is independent 
+    CAUTION: Array to ArrayList is linked. What happens to one happens to the other
+    
     */
     
     static void M(){
         System.out.println("\nMethod M: ");
-        //ArrayList to Array: 
-        ArrayList<String> a = new ArrayList<>();
+        ArrayList<String> a = new ArrayList<>();    
+        Integer[] b0={4,3,2,44};
+        
+        //ArrayList to Array: Java creates a new Array INDEPENDENT of the ArrayList object
+        //default: returns list of Objects
+ 
         a.add("String1");
+        a.add("String2");
         
         Object[] objectArr=a.toArray();
-        System.out.println(objectArr);
+        System.out.println("objectArr[0]="+objectArr[0]);
+        System.out.println("objectArr.length="+objectArr.length);
         
+        
+        //ArrayList to a non-object array (in this case, String)
+        String[] stringArr=a.toArray(new String[0]);
+        
+                
+        //Array to ArrayList/List:  
+        //IMPORTANT: the original Array and List ARE LINKED
+        List<Integer> b1= Arrays.asList(b0);
+        System.out.println("ArrayList of Integers, b1:"+ b1);
+
+        System.out.println("b0 is an object of type: "+b0.getClass().getTypeName());
+        System.out.println("b1 is an object of type: "+b1.getClass().getTypeName());
+        System.out.println("b1 entries is a wrapper class of type: "+b1.get(1).getClass().getTypeName());
+        
+        //we change ARRAY entry then confirm that both change because they are linked
+        b0[1]=66;
+        System.out.print("");
+        for(int stuff:b0)
+            System.out.print(stuff+" "); //array
+        System.out.println(b1); //list
+        
+        //we change LIST entry then confirm that both change because they are linked
+        b1.set(1,33);
+        for(int stuff:b0)
+            System.out.print(stuff+" ");
+        System.out.println(b1);        
     }
     
     static void N(){
-    
+        System.out.println("\nMethod N:");
     }
 }
