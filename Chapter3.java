@@ -3,7 +3,9 @@ package ch3;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 //import java.util.*; //alternative to the two imports above
+
 /**
  *
  * @author huanj
@@ -25,9 +27,11 @@ import java.util.List;
  *      4.1*ArrayList methods
  *      4.2*ArrayList and Wrapper Classes 
  *      4.3*Autoboxing 
+ *      4.4*ArrayList<->Array conversion
+ *      4.5*Sorting 
  * 
  * --its use with generics
- * ()autoboxing
+ * (5)autoboxing
  * 
  * (6)LocalDate, LocalTime, and LocalDateTime objects
  * 
@@ -323,7 +327,9 @@ public class Chapter3 {
         a.add(0,Boolean.TRUE); //void return type NOTE: we are adding a Boolean wrapper object
         System.out.println(a);
         
-        
+
+
+
         //.remove() takes an (element) or (int index) parameter)
         a.remove(1); //returns a boolean telling us it was removed (Boolean.TRUE) or not (Boolean.FALSE)
         a.remove(Boolean.TRUE);
@@ -397,13 +403,12 @@ public class Chapter3 {
         System.out.println("ArrayList c:"+c);
     }
     /*
-    4.3* ArrayList <-> Array Conversion 
+    4.4* ArrayList/List <-> Array Conversion 
     
     ArrayList has a toArray() method that returns an Array
-    
-    ArrayList/List to Array is independent 
+        -both parties remain independent 
     CAUTION: Array to ArrayList is linked. What happens to one happens to the other
-    
+
     */
     
     static void M(){
@@ -426,30 +431,41 @@ public class Chapter3 {
         String[] stringArr=a.toArray(new String[0]);
         
                 
-        //Array to ArrayList/List:  
+        //Array to ArrayList/List:      
         //IMPORTANT: the original Array and List ARE LINKED
         List<Integer> b1= Arrays.asList(b0);
         System.out.println("ArrayList of Integers, b1:"+ b1);
 
         System.out.println("b0 is an object of type: "+b0.getClass().getTypeName());
         System.out.println("b1 is an object of type: "+b1.getClass().getTypeName());
-        System.out.println("b1 entries is a wrapper class of type: "+b1.get(1).getClass().getTypeName());
+        System.out.println("b1 entries are a wrapper class of type: "+b1.get(1).getClass().getTypeName());
         
         //we change ARRAY entry then confirm that both change because they are linked
         b0[1]=66;
-        System.out.print("");
+        System.out.print("Array Modified (b0 and b1): ");
         for(int stuff:b0)
             System.out.print(stuff+" "); //array
         System.out.println(b1); //list
         
         //we change LIST entry then confirm that both change because they are linked
         b1.set(1,33);
+        System.out.print("List modified (b0 and b1): ");
         for(int stuff:b0)
             System.out.print(stuff+" ");
         System.out.println(b1);        
+        
+        /*
+        4.4* Sorting 
+        ArrayLists can sorted via a helpter class called Collections
+        requires import java.util.Collections; 
+        */
+        Collections.sort(b1); //takes in a 
+        System.out.println("ArrayList b1 after sort(): "+b1);
+        
     }
     
+    /*5* Dates and Time classes */
     static void N(){
-        System.out.println("\nMethod N:");
+        System.out.println("\nMethod N:");   
     }
 }
